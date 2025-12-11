@@ -51,6 +51,14 @@
     "message": "Cancel",
     "description": "Description for cancel shortcut"
   },
+  "popupShortcutSettings": {
+    "message": "⚙️ Change Shortcuts",
+    "description": "Link to shortcuts settings page"
+  },
+  "popupViewHistory": {
+    "message": "View History",
+    "description": "Button text to view history"
+  },
   "popupHistoryTitle": {
     "message": "Recent Conversions",
     "description": "Section title for conversion history"

@@ -51,6 +51,14 @@
     "message": "취소",
     "description": "취소 단축키 설명"
   },
+  "popupShortcutSettings": {
+    "message": "⚙️ 단축키 설정 변경",
+    "description": "단축키 설정 페이지 링크"
+  },
+  "popupViewHistory": {
+    "message": "기록 보기",
+    "description": "기록 보기 버튼 텍스트"
+  },
   "popupHistoryTitle": {
     "message": "최근 변환 기록",
     "description": "변환 기록 섹션 제목"
@@ -190,7 +198,7 @@
     }
   },
   "sidepanelTitle": {
-    "message": "변환 기록",
+    "message": "History",
     "description": "사이드 패널 제목"
   },
   "sidepanelItemCount": {

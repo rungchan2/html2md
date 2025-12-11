@@ -71,11 +71,6 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
     checkCommandShortcuts();
   }
-
-  // Enable side panel on action icon click
-  chrome.sidePanel
-    .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error('[html2md] Failed to set panel behavior:', error));
 });
 
 // Check if commands are properly registered

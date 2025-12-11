@@ -12,8 +12,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   const toggleButton = document.getElementById('toggleButton');
-  const historyList = document.getElementById('historyList');
-  const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+  const viewHistoryButton = document.getElementById('viewHistoryButton');
+  const shortcutLink = document.querySelector('.shortcut-link');
+
+  // Handle shortcut settings link
+  if (shortcutLink) {
+    shortcutLink.addEventListener('click', () => {
+      chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+    });
+  }
 
   // Send message with retry logic
   async function sendMessageWithRetry(tabId, message, maxRetries = 3) {
@@ -41,187 +48,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Format timestamp to relative time
-  function formatTimestamp(isoString) {
-    const date = new Date(isoString);
-    const now = new Date();
-    const diffMs = now - date;
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
-
-    if (diffMins < 1) return chrome.i18n.getMessage('timeJustNow');
-    if (diffMins < 60) return chrome.i18n.getMessage('timeMinutesAgo', [diffMins.toString()]);
-    if (diffHours < 24) return chrome.i18n.getMessage('timeHoursAgo', [diffHours.toString()]);
-    if (diffDays < 7) return chrome.i18n.getMessage('timeDaysAgo', [diffDays.toString()]);
-    return date.toLocaleDateString();
-  }
-
-  // Load and display history
-  async function loadHistory() {
+  // Open side panel
+  async function openSidePanel() {
     try {
-      const result = await chrome.storage.local.get(['conversionHistory']);
-      const history = result.conversionHistory || [];
-
-      console.log('[html2md] Loaded history:', history.length, 'items');
-
-      if (history.length === 0) {
-        historyList.innerHTML = `<div class="history-empty">${chrome.i18n.getMessage('popupHistoryEmpty')}</div>`;
-        clearHistoryBtn.style.display = 'none';
-        return;
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tab && tab.windowId) {
+        await chrome.sidePanel.open({ windowId: tab.windowId });
+        window.close(); // Close popup after opening side panel
       }
-
-      clearHistoryBtn.style.display = 'block';
-      historyList.innerHTML = '';
-
-      history.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'history-item';
-
-        itemDiv.innerHTML = `
-          <div class="history-header">
-            <div class="history-title" title="${item.title}">${item.title}</div>
-            <div class="history-time">${formatTimestamp(item.timestamp)}</div>
-          </div>
-          <div class="history-url" title="${item.url}">${item.url}</div>
-          <div class="history-preview" title="${item.preview}">${item.preview}</div>
-          <div class="history-actions">
-            <button class="history-action-btn copy-btn" data-index="${index}">📋 ${chrome.i18n.getMessage('popupHistoryCopy')}</button>
-            <button class="history-action-btn download-btn" data-index="${index}">💾 ${chrome.i18n.getMessage('popupHistoryDownload')}</button>
-            <button class="history-action-btn delete" data-index="${index}">🗑️</button>
-          </div>
-        `;
-
-        historyList.appendChild(itemDiv);
-      });
-
-      // Add event listeners to buttons
-      document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const index = parseInt(btn.dataset.index);
-          await copyHistoryItem(history[index]);
-        });
-      });
-
-      document.querySelectorAll('.download-btn').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const index = parseInt(btn.dataset.index);
-          await downloadHistoryItem(history[index]);
-        });
-      });
-
-      document.querySelectorAll('.delete').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const index = parseInt(btn.dataset.index);
-          await deleteHistoryItem(index);
-        });
-      });
-
     } catch (error) {
-      console.error('[html2md] Error loading history:', error);
-      historyList.innerHTML = `<div class="history-empty">${chrome.i18n.getMessage('popupHistoryLoadError')}</div>`;
+      console.error('[html2md] Failed to open side panel:', error);
     }
-  }
-
-  // Copy history item to clipboard
-  async function copyHistoryItem(item) {
-    try {
-      await navigator.clipboard.writeText(item.markdown);
-      showNotification(chrome.i18n.getMessage('notificationCopied'));
-    } catch (error) {
-      console.error('[html2md] Copy failed:', error);
-      showNotification(chrome.i18n.getMessage('notificationCopyFailed'), true);
-    }
-  }
-
-  // Download history item
-  async function downloadHistoryItem(item) {
-    try {
-      const title = item.title.replace(/[^a-z0-9가-힣]/gi, '_').substring(0, 50) || 'download';
-      const date = new Date(item.timestamp).toISOString().split('T')[0].replace(/-/g, '');
-      const filename = `${title}_${date}.md`;
-
-      const blob = new Blob([item.markdown], { type: 'text/markdown;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-
-      chrome.downloads.download({
-        url: url,
-        filename: filename,
-        saveAs: false
-      }, (downloadId) => {
-        if (chrome.runtime.lastError) {
-          console.error('[html2md] Download error:', chrome.runtime.lastError);
-          showNotification(chrome.i18n.getMessage('notificationDownloadFailed'), true);
-        } else {
-          showNotification(chrome.i18n.getMessage('notificationDownloadStarted'));
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-        }
-      });
-    } catch (error) {
-      console.error('[html2md] Download failed:', error);
-      showNotification(chrome.i18n.getMessage('notificationDownloadFailed'), true);
-    }
-  }
-
-  // Delete single history item
-  async function deleteHistoryItem(index) {
-    try {
-      const result = await chrome.storage.local.get(['conversionHistory']);
-      let history = result.conversionHistory || [];
-
-      history.splice(index, 1);
-
-      await chrome.storage.local.set({ conversionHistory: history });
-      await loadHistory();
-      showNotification(chrome.i18n.getMessage('notificationDeleted'));
-    } catch (error) {
-      console.error('[html2md] Delete failed:', error);
-      showNotification(chrome.i18n.getMessage('notificationDeleteFailed'), true);
-    }
-  }
-
-  // Clear all history
-  async function clearAllHistory() {
-    if (!confirm(chrome.i18n.getMessage('confirmClearAll'))) {
-      return;
-    }
-
-    try {
-      await chrome.storage.local.set({ conversionHistory: [] });
-      await loadHistory();
-      showNotification(chrome.i18n.getMessage('notificationAllCleared'));
-    } catch (error) {
-      console.error('[html2md] Clear history failed:', error);
-      showNotification(chrome.i18n.getMessage('notificationClearFailed'), true);
-    }
-  }
-
-  // Show notification
-  function showNotification(message, isError = false) {
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 16px;
-      background: ${isError ? '#fee' : '#eff6ff'};
-      border: 1px solid ${isError ? '#fcc' : '#3b82f6'};
-      color: ${isError ? '#c33' : '#1e40af'};
-      border-radius: 6px;
-      font-size: 12px;
-      z-index: 10000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    `;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-      notification.remove();
-    }, 2000);
   }
 
   // Handle toggle button click
@@ -284,9 +121,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Clear history button
-  clearHistoryBtn.addEventListener('click', clearAllHistory);
-
-  // Load history on popup open
-  await loadHistory();
+  // View history button
+  viewHistoryButton.addEventListener('click', openSidePanel);
 });
