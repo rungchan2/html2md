@@ -152,7 +152,7 @@
     toolbar.className = 'html2md-toolbar';
     toolbar.innerHTML = `
       <p class="html2md-toolbar-text">
-        섹션을 선택하세요 | Shift+클릭: 다중선택 | Shift+↑↓: 범위조절 | ESC: 취소
+        ${chrome.i18n.getMessage('toolbarInstruction')}
       </p>
     `;
     document.body.appendChild(toolbar);
@@ -456,7 +456,7 @@
 
     if (!turndownService) {
       console.error('[html2md] Failed to initialize turndown service');
-      showToast('마크다운 변환 라이브러리를 로드할 수 없습니다', true);
+      showToast(chrome.i18n.getMessage('toastLibraryLoadFailed'), true);
       return null;
     }
 
@@ -508,7 +508,7 @@
   }
 
   // Handle copy to clipboard
-  function handleCopy() {
+  async function handleCopy() {
     console.log('[html2md] ========== COPY BUTTON CLICKED ==========');
     console.log('[html2md] selectedElements:', selectedElements);
 
@@ -516,13 +516,13 @@
 
     if (!markdown) {
       console.error('[html2md] No markdown returned from convertToMarkdown()');
-      showToast('변환할 콘텐츠가 없습니다', true);
+      showToast(chrome.i18n.getMessage('toastNoContent'), true);
       return;
     }
 
     if (markdown.trim().length === 0) {
       console.error('[html2md] Markdown is empty after trim');
-      showToast('변환된 콘텐츠가 비어있습니다', true);
+      showToast(chrome.i18n.getMessage('toastEmptyContent'), true);
       return;
     }
 
@@ -531,18 +531,21 @@
     // Use the Clipboard API
     if (navigator.clipboard && navigator.clipboard.writeText) {
       console.log('[html2md] Using Clipboard API...');
-      navigator.clipboard.writeText(markdown)
-        .then(() => {
-          console.log('[html2md] ✅ Copy successful via Clipboard API');
-          showToast('복사되었습니다');
-          deactivateSelectionMode();
-        })
-        .catch(err => {
-          console.error('[html2md] ❌ Clipboard API failed:', err);
-          console.error('[html2md] Error name:', err.name);
-          console.error('[html2md] Error message:', err.message);
-          showToast('복사에 실패했습니다: ' + err.message, true);
-        });
+      try {
+        await navigator.clipboard.writeText(markdown);
+        console.log('[html2md] ✅ Copy successful via Clipboard API');
+
+        // Save to history after successful copy
+        await saveToHistory(markdown, document.title, window.location.href);
+
+        showToast(chrome.i18n.getMessage('toastCopied'));
+        deactivateSelectionMode();
+      } catch (err) {
+        console.error('[html2md] ❌ Clipboard API failed:', err);
+        console.error('[html2md] Error name:', err.name);
+        console.error('[html2md] Error message:', err.message);
+        showToast(chrome.i18n.getMessage('toastCopyFailed') + err.message, true);
+      }
     } else {
       // Fallback for older browsers
       console.log('[html2md] Using fallback copy method...');
@@ -558,15 +561,19 @@
         console.log('[html2md] execCommand result:', success);
         if (success) {
           console.log('[html2md] ✅ Copy successful (fallback)');
-          showToast('복사되었습니다');
+
+          // Save to history after successful copy
+          await saveToHistory(markdown, document.title, window.location.href);
+
+          showToast(chrome.i18n.getMessage('toastCopied'));
           deactivateSelectionMode();
         } else {
           console.error('[html2md] ❌ execCommand returned false');
-          showToast('복사에 실패했습니다', true);
+          showToast(chrome.i18n.getMessage('toastCopyFailed'), true);
         }
       } catch (err) {
         console.error('[html2md] ❌ Fallback copy failed:', err);
-        showToast('복사에 실패했습니다', true);
+        showToast(chrome.i18n.getMessage('toastCopyFailed'), true);
       }
 
       document.body.removeChild(textarea);
@@ -582,13 +589,13 @@
 
     if (!markdown) {
       console.error('[html2md] No markdown returned from convertToMarkdown()');
-      showToast('변환할 콘텐츠가 없습니다', true);
+      showToast(chrome.i18n.getMessage('toastNoContent'), true);
       return;
     }
 
     if (markdown.trim().length === 0) {
       console.error('[html2md] Markdown is empty after trim');
-      showToast('변환된 콘텐츠가 비어있습니다', true);
+      showToast(chrome.i18n.getMessage('toastEmptyContent'), true);
       return;
     }
 
@@ -614,19 +621,23 @@
         action: 'download',
         url: url,
         filename: filename
-      }, (response) => {
+      }, async (response) => {
         console.log('[html2md] Download response:', response);
 
         if (chrome.runtime.lastError) {
           console.error('[html2md] ❌ Chrome runtime error:', chrome.runtime.lastError);
-          showToast('다운로드에 실패했습니다', true);
+          showToast(chrome.i18n.getMessage('toastDownloadFailed'), true);
         } else if (response && response.success) {
           console.log('[html2md] ✅ Download initiated successfully');
-          showToast('다운로드 완료');
+
+          // Save to history after successful download
+          await saveToHistory(markdown, document.title, window.location.href);
+
+          showToast(chrome.i18n.getMessage('toastDownloadComplete'));
           deactivateSelectionMode();
         } else {
           console.error('[html2md] ❌ Download failed:', response?.error);
-          showToast('다운로드에 실패했습니다: ' + (response?.error || 'Unknown error'), true);
+          showToast(chrome.i18n.getMessage('toastDownloadFailed') + (response?.error || 'Unknown error'), true);
         }
 
         // Clean up the object URL after a delay
@@ -641,7 +652,7 @@
       console.error('[html2md] Error name:', err.name);
       console.error('[html2md] Error message:', err.message);
       console.error('[html2md] Error stack:', err.stack);
-      showToast('다운로드에 실패했습니다: ' + err.message, true);
+      showToast(chrome.i18n.getMessage('toastDownloadFailed') + err.message, true);
     }
   }
 
@@ -680,6 +691,45 @@
       toggleSelectionMode();
     }
   });
+
+  // Storage utility functions for history management
+  const MAX_HISTORY_ITEMS = 10;
+
+  async function saveToHistory(markdown, pageTitle, pageUrl) {
+    try {
+      console.log('[html2md] Saving to history...');
+
+      // Get current history
+      const result = await chrome.storage.local.get(['conversionHistory']);
+      let history = result.conversionHistory || [];
+
+      // Create new history item
+      const historyItem = {
+        id: Date.now(),
+        markdown: markdown,
+        title: pageTitle,
+        url: pageUrl,
+        timestamp: new Date().toISOString(),
+        preview: markdown.substring(0, 100) + (markdown.length > 100 ? '...' : '')
+      };
+
+      // Add to beginning of array
+      history.unshift(historyItem);
+
+      // Keep only the latest 10 items
+      if (history.length > MAX_HISTORY_ITEMS) {
+        history = history.slice(0, MAX_HISTORY_ITEMS);
+        console.log('[html2md] Auto-cleanup: removed old history items');
+      }
+
+      // Save back to storage
+      await chrome.storage.local.set({ conversionHistory: history });
+      console.log('[html2md] ✅ Saved to history, total items:', history.length);
+
+    } catch (error) {
+      console.error('[html2md] ❌ Error saving to history:', error);
+    }
+  }
 
   // Initialize on load
   if (document.readyState === 'loading') {

@@ -1,0 +1,284 @@
+{
+  "extensionName": {
+    "message": "html2md",
+    "description": "Name of the extension"
+  },
+  "extensionDescription": {
+    "message": "Visually select web page sections and convert them to Markdown",
+    "description": "Description of the extension"
+  },
+  "commandToggleSelectionMode": {
+    "message": "Toggle selection mode",
+    "description": "Description for keyboard command"
+  },
+  "popupStartSelectionMode": {
+    "message": "Start Selection Mode",
+    "description": "Button text to start selection mode"
+  },
+  "popupHowToUseTitle": {
+    "message": "How to Use",
+    "description": "Section title for usage instructions"
+  },
+  "popupStep1": {
+    "message": "Activate selection mode",
+    "description": "First step of usage instructions"
+  },
+  "popupStep2": {
+    "message": "Click on desired sections",
+    "description": "Second step of usage instructions"
+  },
+  "popupStep3": {
+    "message": "Copy or download",
+    "description": "Third step of usage instructions"
+  },
+  "popupShortcutsTitle": {
+    "message": "Shortcuts",
+    "description": "Section title for keyboard shortcuts"
+  },
+  "popupShortcutToggle": {
+    "message": "Toggle selection mode",
+    "description": "Description for toggle shortcut"
+  },
+  "popupShortcutMultiSelect": {
+    "message": "Multi-select",
+    "description": "Description for multi-select shortcut"
+  },
+  "popupShortcutRangeAdjust": {
+    "message": "Adjust range",
+    "description": "Description for range adjustment shortcut"
+  },
+  "popupShortcutCancel": {
+    "message": "Cancel",
+    "description": "Description for cancel shortcut"
+  },
+  "popupHistoryTitle": {
+    "message": "Recent Conversions",
+    "description": "Section title for conversion history"
+  },
+  "popupHistoryClearAll": {
+    "message": "Clear All",
+    "description": "Button text to clear all history"
+  },
+  "popupHistoryEmpty": {
+    "message": "No conversion history",
+    "description": "Message when history is empty"
+  },
+  "popupHistoryCopy": {
+    "message": "Copy",
+    "description": "Button text to copy from history"
+  },
+  "popupHistoryDownload": {
+    "message": "Download",
+    "description": "Button text to download from history"
+  },
+  "popupHistoryLoadError": {
+    "message": "Failed to load history",
+    "description": "Error message when history fails to load"
+  },
+  "popupChromePageError": {
+    "message": "This extension cannot be used on this page.\nPlease try on a regular web page.",
+    "description": "Error message for chrome:// pages"
+  },
+  "popupScriptLoadError": {
+    "message": "Failed to load scripts.\nPlease refresh the page and try again.",
+    "description": "Error message when script injection fails"
+  },
+  "popupUnexpectedError": {
+    "message": "An error occurred.\n",
+    "description": "Generic error message prefix"
+  },
+  "notificationCopied": {
+    "message": "Copied to clipboard",
+    "description": "Success notification for copy"
+  },
+  "notificationCopyFailed": {
+    "message": "Copy failed",
+    "description": "Error notification for copy failure"
+  },
+  "notificationDownloadStarted": {
+    "message": "Download started",
+    "description": "Success notification for download"
+  },
+  "notificationDownloadFailed": {
+    "message": "Download failed",
+    "description": "Error notification for download failure"
+  },
+  "notificationDeleted": {
+    "message": "Deleted",
+    "description": "Success notification for deletion"
+  },
+  "notificationDeleteFailed": {
+    "message": "Delete failed",
+    "description": "Error notification for deletion failure"
+  },
+  "notificationAllCleared": {
+    "message": "All history cleared",
+    "description": "Success notification for clearing all history"
+  },
+  "notificationClearFailed": {
+    "message": "Clear failed",
+    "description": "Error notification for clear failure"
+  },
+  "confirmClearAll": {
+    "message": "Delete all conversion history?",
+    "description": "Confirmation message for clearing all history"
+  },
+  "toolbarInstruction": {
+    "message": "Select sections | Shift+Click: Multi-select | Shift+↑↓: Adjust range | ESC: Cancel",
+    "description": "Instruction text shown in top toolbar"
+  },
+  "toastCopied": {
+    "message": "Copied",
+    "description": "Toast notification for successful copy"
+  },
+  "toastDownloadComplete": {
+    "message": "Download complete",
+    "description": "Toast notification for successful download"
+  },
+  "toastNoContent": {
+    "message": "No content to convert",
+    "description": "Toast error when no content is selected"
+  },
+  "toastEmptyContent": {
+    "message": "Converted content is empty",
+    "description": "Toast error when converted content is empty"
+  },
+  "toastCopyFailed": {
+    "message": "Copy failed: ",
+    "description": "Toast error prefix for copy failure"
+  },
+  "toastDownloadFailed": {
+    "message": "Download failed: ",
+    "description": "Toast error prefix for download failure"
+  },
+  "toastLibraryLoadFailed": {
+    "message": "Failed to load markdown conversion library",
+    "description": "Toast error when Turndown fails to load"
+  },
+  "timeJustNow": {
+    "message": "Just now",
+    "description": "Relative time for less than 1 minute ago"
+  },
+  "timeMinutesAgo": {
+    "message": "$COUNT$ min ago",
+    "description": "Relative time for minutes ago",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$COUNT$ hours ago",
+    "description": "Relative time for hours ago",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$COUNT$ days ago",
+    "description": "Relative time for days ago",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "sidepanelTitle": {
+    "message": "Conversion History",
+    "description": "Side panel title"
+  },
+  "sidepanelItemCount": {
+    "message": "$COUNT$ items",
+    "description": "Item count in side panel",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "sidepanelClearAll": {
+    "message": "Clear All",
+    "description": "Clear all button in side panel"
+  },
+  "sidepanelEmpty": {
+    "message": "No conversion history",
+    "description": "Empty state message"
+  },
+  "sidepanelEmptyHint": {
+    "message": "Convert some content to see it here",
+    "description": "Empty state hint"
+  },
+  "sidepanelCopy": {
+    "message": "Copy",
+    "description": "Copy button in side panel"
+  },
+  "sidepanelDownload": {
+    "message": "Download",
+    "description": "Download button in side panel"
+  },
+  "sidepanelDelete": {
+    "message": "Delete",
+    "description": "Delete button in side panel"
+  },
+  "sidepanelLines": {
+    "message": "$COUNT$ lines",
+    "description": "Line count in side panel",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "sidepanelCopySuccess": {
+    "message": "Copied to clipboard",
+    "description": "Success notification for copy in side panel"
+  },
+  "sidepanelCopyError": {
+    "message": "Failed to copy",
+    "description": "Error notification for copy in side panel"
+  },
+  "sidepanelDownloadSuccess": {
+    "message": "Download started",
+    "description": "Success notification for download in side panel"
+  },
+  "sidepanelDownloadError": {
+    "message": "Download failed",
+    "description": "Error notification for download in side panel"
+  },
+  "sidepanelDeleteSuccess": {
+    "message": "Deleted",
+    "description": "Success notification for delete in side panel"
+  },
+  "sidepanelDeleteError": {
+    "message": "Delete failed",
+    "description": "Error notification for delete in side panel"
+  },
+  "sidepanelClearSuccess": {
+    "message": "All history cleared",
+    "description": "Success notification for clear all in side panel"
+  },
+  "sidepanelClearError": {
+    "message": "Failed to clear history",
+    "description": "Error notification for clear all in side panel"
+  },
+  "sidepanelConfirmClearAll": {
+    "message": "Delete all conversion history?",
+    "description": "Confirmation message for clear all in side panel"
+  },
+  "sidepanelRefreshed": {
+    "message": "Refreshed",
+    "description": "Notification for refresh in side panel"
+  },
+  "sidepanelLoadError": {
+    "message": "Failed to load history",
+    "description": "Error notification for loading history in side panel"
+  }
+}

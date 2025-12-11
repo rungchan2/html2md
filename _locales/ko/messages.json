@@ -1,0 +1,284 @@
+{
+  "extensionName": {
+    "message": "html2md",
+    "description": "확장 프로그램 이름"
+  },
+  "extensionDescription": {
+    "message": "웹 페이지 섹션을 시각적으로 선택하여 마크다운으로 변환합니다",
+    "description": "확장 프로그램 설명"
+  },
+  "commandToggleSelectionMode": {
+    "message": "선택 모드 토글",
+    "description": "키보드 명령어 설명"
+  },
+  "popupStartSelectionMode": {
+    "message": "선택 모드 시작",
+    "description": "선택 모드 시작 버튼 텍스트"
+  },
+  "popupHowToUseTitle": {
+    "message": "사용 방법",
+    "description": "사용 방법 섹션 제목"
+  },
+  "popupStep1": {
+    "message": "선택 모드를 활성화하세요",
+    "description": "사용 방법 첫 번째 단계"
+  },
+  "popupStep2": {
+    "message": "원하는 섹션을 클릭하세요",
+    "description": "사용 방법 두 번째 단계"
+  },
+  "popupStep3": {
+    "message": "복사 또는 다운로드하세요",
+    "description": "사용 방법 세 번째 단계"
+  },
+  "popupShortcutsTitle": {
+    "message": "단축키",
+    "description": "단축키 섹션 제목"
+  },
+  "popupShortcutToggle": {
+    "message": "선택 모드 토글",
+    "description": "토글 단축키 설명"
+  },
+  "popupShortcutMultiSelect": {
+    "message": "다중 선택",
+    "description": "다중 선택 단축키 설명"
+  },
+  "popupShortcutRangeAdjust": {
+    "message": "범위 조절",
+    "description": "범위 조절 단축키 설명"
+  },
+  "popupShortcutCancel": {
+    "message": "취소",
+    "description": "취소 단축키 설명"
+  },
+  "popupHistoryTitle": {
+    "message": "최근 변환 기록",
+    "description": "변환 기록 섹션 제목"
+  },
+  "popupHistoryClearAll": {
+    "message": "전체 삭제",
+    "description": "전체 삭제 버튼 텍스트"
+  },
+  "popupHistoryEmpty": {
+    "message": "변환 기록이 없습니다",
+    "description": "기록이 비어있을 때 메시지"
+  },
+  "popupHistoryCopy": {
+    "message": "복사",
+    "description": "기록에서 복사 버튼 텍스트"
+  },
+  "popupHistoryDownload": {
+    "message": "다운로드",
+    "description": "기록에서 다운로드 버튼 텍스트"
+  },
+  "popupHistoryLoadError": {
+    "message": "기록을 불러오는데 실패했습니다",
+    "description": "기록 로드 실패 에러 메시지"
+  },
+  "popupChromePageError": {
+    "message": "이 페이지에서는 확장 프로그램을 사용할 수 없습니다.\n일반 웹페이지에서 시도해주세요.",
+    "description": "chrome:// 페이지 에러 메시지"
+  },
+  "popupScriptLoadError": {
+    "message": "스크립트를 로드하는데 실패했습니다.\n페이지를 새로고침한 후 다시 시도해주세요.",
+    "description": "스크립트 주입 실패 에러 메시지"
+  },
+  "popupUnexpectedError": {
+    "message": "오류가 발생했습니다.\n",
+    "description": "일반 에러 메시지 접두사"
+  },
+  "notificationCopied": {
+    "message": "클립보드에 복사되었습니다",
+    "description": "복사 성공 알림"
+  },
+  "notificationCopyFailed": {
+    "message": "복사에 실패했습니다",
+    "description": "복사 실패 알림"
+  },
+  "notificationDownloadStarted": {
+    "message": "다운로드가 시작되었습니다",
+    "description": "다운로드 성공 알림"
+  },
+  "notificationDownloadFailed": {
+    "message": "다운로드에 실패했습니다",
+    "description": "다운로드 실패 알림"
+  },
+  "notificationDeleted": {
+    "message": "삭제되었습니다",
+    "description": "삭제 성공 알림"
+  },
+  "notificationDeleteFailed": {
+    "message": "삭제에 실패했습니다",
+    "description": "삭제 실패 알림"
+  },
+  "notificationAllCleared": {
+    "message": "모든 기록이 삭제되었습니다",
+    "description": "전체 삭제 성공 알림"
+  },
+  "notificationClearFailed": {
+    "message": "삭제에 실패했습니다",
+    "description": "전체 삭제 실패 알림"
+  },
+  "confirmClearAll": {
+    "message": "모든 변환 기록을 삭제하시겠습니까?",
+    "description": "전체 삭제 확인 메시지"
+  },
+  "toolbarInstruction": {
+    "message": "섹션을 선택하세요 | Shift+클릭: 다중선택 | Shift+↑↓: 범위조절 | ESC: 취소",
+    "description": "상단 툴바에 표시되는 안내 텍스트"
+  },
+  "toastCopied": {
+    "message": "복사되었습니다",
+    "description": "복사 성공 토스트 알림"
+  },
+  "toastDownloadComplete": {
+    "message": "다운로드 완료",
+    "description": "다운로드 성공 토스트 알림"
+  },
+  "toastNoContent": {
+    "message": "변환할 콘텐츠가 없습니다",
+    "description": "선택된 콘텐츠가 없을 때 토스트 에러"
+  },
+  "toastEmptyContent": {
+    "message": "변환된 콘텐츠가 비어있습니다",
+    "description": "변환된 콘텐츠가 비어있을 때 토스트 에러"
+  },
+  "toastCopyFailed": {
+    "message": "복사에 실패했습니다: ",
+    "description": "복사 실패 토스트 에러 접두사"
+  },
+  "toastDownloadFailed": {
+    "message": "다운로드에 실패했습니다: ",
+    "description": "다운로드 실패 토스트 에러 접두사"
+  },
+  "toastLibraryLoadFailed": {
+    "message": "마크다운 변환 라이브러리를 로드할 수 없습니다",
+    "description": "Turndown 로드 실패 토스트 에러"
+  },
+  "timeJustNow": {
+    "message": "방금 전",
+    "description": "1분 미만 상대 시간"
+  },
+  "timeMinutesAgo": {
+    "message": "$COUNT$분 전",
+    "description": "분 단위 상대 시간",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$COUNT$시간 전",
+    "description": "시간 단위 상대 시간",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$COUNT$일 전",
+    "description": "일 단위 상대 시간",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "sidepanelTitle": {
+    "message": "변환 기록",
+    "description": "사이드 패널 제목"
+  },
+  "sidepanelItemCount": {
+    "message": "$COUNT$개 항목",
+    "description": "사이드 패널 항목 개수",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "sidepanelClearAll": {
+    "message": "전체 삭제",
+    "description": "사이드 패널 전체 삭제 버튼"
+  },
+  "sidepanelEmpty": {
+    "message": "변환 기록이 없습니다",
+    "description": "빈 상태 메시지"
+  },
+  "sidepanelEmptyHint": {
+    "message": "콘텐츠를 변환하면 여기에 표시됩니다",
+    "description": "빈 상태 힌트"
+  },
+  "sidepanelCopy": {
+    "message": "복사",
+    "description": "사이드 패널 복사 버튼"
+  },
+  "sidepanelDownload": {
+    "message": "다운로드",
+    "description": "사이드 패널 다운로드 버튼"
+  },
+  "sidepanelDelete": {
+    "message": "삭제",
+    "description": "사이드 패널 삭제 버튼"
+  },
+  "sidepanelLines": {
+    "message": "$COUNT$줄",
+    "description": "사이드 패널 줄 수",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "42"
+      }
+    }
+  },
+  "sidepanelCopySuccess": {
+    "message": "클립보드에 복사되었습니다",
+    "description": "사이드 패널 복사 성공 알림"
+  },
+  "sidepanelCopyError": {
+    "message": "복사에 실패했습니다",
+    "description": "사이드 패널 복사 실패 알림"
+  },
+  "sidepanelDownloadSuccess": {
+    "message": "다운로드가 시작되었습니다",
+    "description": "사이드 패널 다운로드 성공 알림"
+  },
+  "sidepanelDownloadError": {
+    "message": "다운로드에 실패했습니다",
+    "description": "사이드 패널 다운로드 실패 알림"
+  },
+  "sidepanelDeleteSuccess": {
+    "message": "삭제되었습니다",
+    "description": "사이드 패널 삭제 성공 알림"
+  },
+  "sidepanelDeleteError": {
+    "message": "삭제에 실패했습니다",
+    "description": "사이드 패널 삭제 실패 알림"
+  },
+  "sidepanelClearSuccess": {
+    "message": "모든 기록이 삭제되었습니다",
+    "description": "사이드 패널 전체 삭제 성공 알림"
+  },
+  "sidepanelClearError": {
+    "message": "기록 삭제에 실패했습니다",
+    "description": "사이드 패널 전체 삭제 실패 알림"
+  },
+  "sidepanelConfirmClearAll": {
+    "message": "모든 변환 기록을 삭제하시겠습니까?",
+    "description": "사이드 패널 전체 삭제 확인 메시지"
+  },
+  "sidepanelRefreshed": {
+    "message": "새로고침되었습니다",
+    "description": "사이드 패널 새로고침 알림"
+  },
+  "sidepanelLoadError": {
+    "message": "기록을 불러오는데 실패했습니다",
+    "description": "사이드 패널 기록 로드 실패 알림"
+  }
+}

@@ -124,6 +124,129 @@
       a:hover {
         text-decoration: underline;
       }
+
+      /* History Section Styles */
+      .history-list {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .history-empty {
+        text-align: center;
+        padding: 20px;
+        color: #999;
+        font-size: 12px;
+      }
+
+      .history-item {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        padding: 8px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .history-item:hover {
+        border-color: #3b82f6;
+        box-shadow: 0 1px 3px rgba(59, 130, 246, 0.1);
+      }
+
+      .history-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 4px;
+      }
+
+      .history-title {
+        font-size: 12px;
+        font-weight: 500;
+        color: #333;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+
+      .history-time {
+        font-size: 10px;
+        color: #999;
+        white-space: nowrap;
+      }
+
+      .history-url {
+        font-size: 10px;
+        color: #666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 4px;
+      }
+
+      .history-preview {
+        font-size: 11px;
+        color: #666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: monospace;
+        background: #f9fafb;
+        padding: 4px 6px;
+        border-radius: 3px;
+      }
+
+      .history-actions {
+        display: flex;
+        gap: 4px;
+        margin-top: 6px;
+      }
+
+      .history-action-btn {
+        flex: 1;
+        padding: 4px 8px;
+        font-size: 11px;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .history-action-btn:hover {
+        background: #e5e7eb;
+      }
+
+      .history-action-btn.delete {
+        flex: 0;
+        background: #fee;
+        border-color: #fcc;
+        color: #c33;
+      }
+
+      .history-action-btn.delete:hover {
+        background: #fcc;
+      }
+
+      .clear-btn {
+        padding: 2px 8px;
+        font-size: 11px;
+        background: #fee;
+        border: 1px solid #fcc;
+        border-radius: 3px;
+        cursor: pointer;
+        color: #c33;
+      }
+
+      .clear-btn:hover {
+        background: #fcc;
+      }
     </style>
   </head>
   <body>
@@ -134,46 +257,56 @@
     </div>
 
     <div class="section">
-      <button class="button" id="toggleButton">선택 모드 시작</button>
+      <button class="button" id="toggleButton" data-i18n="popupStartSelectionMode">선택 모드 시작</button>
     </div>
 
     <div class="section">
-      <div class="section-title">사용 방법</div>
+      <div class="section-title" data-i18n="popupHowToUseTitle">사용 방법</div>
       <div class="info">
         <div class="info-item">
           <span class="icon">1️⃣</span>
-          <span>선택 모드를 활성화하세요</span>
+          <span data-i18n="popupStep1">선택 모드를 활성화하세요</span>
         </div>
         <div class="info-item">
           <span class="icon">2️⃣</span>
-          <span>원하는 섹션을 클릭하세요</span>
+          <span data-i18n="popupStep2">원하는 섹션을 클릭하세요</span>
         </div>
         <div class="info-item">
           <span class="icon">3️⃣</span>
-          <span>복사 또는 다운로드하세요</span>
+          <span data-i18n="popupStep3">복사 또는 다운로드하세요</span>
         </div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-title">단축키</div>
+      <div class="section-title" data-i18n="popupShortcutsTitle">단축키</div>
       <div class="info">
         <div class="info-item">
           <span class="kbd">Cmd+Shift+X</span>
-          <span>선택 모드 토글</span>
+          <span data-i18n="popupShortcutToggle">선택 모드 토글</span>
         </div>
         <div class="info-item">
           <span class="kbd">Shift+클릭</span>
-          <span>다중 선택</span>
+          <span data-i18n="popupShortcutMultiSelect">다중 선택</span>
         </div>
         <div class="info-item">
           <span class="kbd">Shift+↑↓</span>
-          <span>범위 조절</span>
+          <span data-i18n="popupShortcutRangeAdjust">범위 조절</span>
         </div>
         <div class="info-item">
           <span class="kbd">ESC</span>
-          <span>취소</span>
+          <span data-i18n="popupShortcutCancel">취소</span>
         </div>
+      </div>
+    </div>
+
+    <div class="section" id="historySection">
+      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <span data-i18n="popupHistoryTitle">최근 변환 기록</span>
+        <button id="clearHistoryBtn" class="clear-btn" style="display: none;" data-i18n="popupHistoryClearAll">전체 삭제</button>
+      </div>
+      <div id="historyList" class="history-list">
+        <div class="history-empty" data-i18n="popupHistoryEmpty">변환 기록이 없습니다</div>
       </div>
     </div>
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>html2md - Conversion History</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">📝</div>
+        <h1 data-i18n="sidepanelTitle">Conversion History</h1>
+        <button id="refreshBtn" class="icon-button" title="Refresh">
+          🔄
+        </button>
+      </div>
+
+      <div class="toolbar">
+        <div class="stats">
+          <span id="itemCount" data-i18n="sidepanelItemCount">0 items</span>
+        </div>
+        <button id="clearAllBtn" class="clear-all-button" data-i18n="sidepanelClearAll">
+          Clear All
+        </button>
+      </div>
+
+      <div id="historyContainer" class="history-container">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">📭</div>
+          <p data-i18n="sidepanelEmpty">No conversion history</p>
+          <p class="empty-hint" data-i18n="sidepanelEmptyHint">
+            Convert some content to see it here
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>
